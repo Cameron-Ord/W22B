@@ -13,7 +13,7 @@ def new_client():
          error=api_helper.check_endpoint_info(request.json, ['username', 'email', 'password', 'bio', 'image_url']) 
          if(error !=None):
             return make_response(jsonify(error), 400)
-         #calls the proceedure to insert sent information into the DB
+         #calls the procedure to insert sent information into the DB
          results = dbhelper.run_proceedure('CALL new_client(?,?,?,?,?)', [request.json.get('username'), request.json.get('email'), request.json.get('password'), request.json.get('bio'), request.json.get('image_url')])
          #returns results from db run_procedure
          if(type(results) == list):
@@ -36,7 +36,7 @@ def login():
          error=api_helper.check_endpoint_info(request.json, ['username', 'password']) 
          if(error !=None):
             return make_response(jsonify(error), 400)
-         #calls the proceedure to insert sent information into the DB
+         #calls the procedure to insert sent information into the DB
          token = uuid.uuid4().hex
          results = dbhelper.run_proceedure('CALL client_login(?,?,?)', [token, request.json.get('username'), request.json.get('password')])
          #returns results from db run_procedure
@@ -60,7 +60,7 @@ def delete_log():
          error=api_helper.check_endpoint_info(request.json, ['token']) 
          if(error !=None):
             return make_response(jsonify(error), 400)
-         #calls the proceedure to insert sent information into the DB
+         #calls the procedure to delete information from the DB based on input
          results = dbhelper.run_proceedure('CALL log_out(?)', [request.json.get('token')])
          #returns results from db run_procedure
          return make_response(jsonify(results), 200)
@@ -80,7 +80,7 @@ def get_client():
          error=api_helper.check_endpoint_info(request.args, ['token']) 
          if(error !=None):
             return make_response(jsonify(error), 400)
-         #calls the proceedure to insert sent information into the DB
+         #calls the procedure to retrieve information from the DB
          results = dbhelper.run_proceedure('CALL get_client(?)', [request.args.get('token')])
          #returns results from db run_procedure
          if(type(results) == list):
